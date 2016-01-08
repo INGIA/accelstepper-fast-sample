@@ -1,0 +1,51 @@
+
+//----------------. .-----------------..----------------. .----------------. .----------------. 
+//.--------------. | .--------------. | .--------------. | .--------------. | .--------------. |
+//|     _____    | | | ____  _____  | | |    ______    | | |     _____    | | |      __      | |
+//|    |_   _|   | | ||_   \|_   _| | | |  .' ___  |   | | |    |_   _|   | | |     /  \     | |
+//|      | |     | | |  |   \ | |   | | | / .'   \_|   | | |      | |     | | |    / /\ \    | |
+//|      | |     | | |  | |\ \| |   | | | | |    ____  | | |      | |     | | |   / ____ \   | |
+//|     _| |_    | | | _| |_\   |_  | | | \ `.___]  _| | | |     _| |_    | | | _/ /    \ \_ | |
+//|    |_____|   | | ||_____|\____| | | |  `._____.'   | | |    |_____|   | | ||____|  |____|| |
+//|              | | |              | | |              | | |              | | |              | |
+//'--------------' | '--------------' | '--------------' | '--------------' | '--------------' |
+//----------------' '----------------' '----------------' '----------------' '----------------' 
+// https://www.facebook.com/INGIAsrl  Respondemos los mensajes!                                                                                                            
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <AccelStepper.h> // Incluye la librería para el control del PAP
+
+const int ena_stepper = 4; //Pin de Habilitación del PAP
+const int pul_stepper = 8; //Pin de Pulsos del PAP
+const int dir_stepper = 9; //Pin de dirección del PAP
+
+AccelStepper stepper (1, pul_stepper, dir_stepper); //  "AccelStepper stepper" (donde stepper va a ser el nombre
+                                                    //de nuestro motor) Puesto en modo DRIVER (1) luego , los pines de pulsos y dirección...
+
+void setup() {
+
+  pinMode (ena_stepper, OUTPUT);
+  digitalWrite(ena_stepper, LOW);// Setea la habilitación del motor , REVISAR SI EL DRIVER LO ACTIVA CON LOW O CON HIGH no todos son iguales, tambien depende de como se conecte. 
+
+   stepper.setMaxSpeed(velo_stepper);     
+   stepper.setSpeed(acel_stepper);  
+}
+
+void loop() {
+               stepper.setCurrentPosition(0);
+               stepper.setMaxSpeed(1000);  //Puede ser "boolean" o "int" entre otras 
+               stepper.setAcceleration(500);  //Puede ser "boolean" o "int" entre otra,  la aceleracion esta expresada en 500 pasos/segundo2
+ 
+               stepper.moveTo(-2500); // se le asigna la posicion absoluta (en pasos) a la cual uno quiere mover el motor. (arranca en posicion cero por default)
+               while(stepper.distanceToGo() != 0)   //  distanceToGo() indica cuanto falta para llegar a la posicion previamente indicada con moveTo
+               {  
+                stepper.run(); //se le da la orden para que se mueva
+               } 
+               stepper.moveTo(0);  //    PARA VOLVER POSICION INICIAL PONEMOS CERO ...se le asigna la posicion absoluta (en pasos) a la cual uno quiere mover el motor. (arranca en posicion cero por default)
+               while(stepper.distanceToGo() != 0)       //  distanceToGo() indica cuanto falta para llegar a la posicion previamente indicada con moveTo
+               {  
+                stepper.run(); //se le da la orden para que se mueva
+               } 
+                delay (0); //pausa en la inversion del giro
+ }
