@@ -26,10 +26,7 @@ AccelStepper stepper (1, pul_stepper, dir_stepper); //  "AccelStepper stepper" (
 void setup() {
 
   pinMode (ena_stepper, OUTPUT);
-  digitalWrite(ena_stepper, LOW);// Setea la habilitación del motor , REVISAR SI EL DRIVER LO ACTIVA CON LOW O CON HIGH no todos son iguales, tambien depende de como se conecte. 
-
-   stepper.setMaxSpeed(velo_stepper);     
-   stepper.setSpeed(acel_stepper);  
+  digitalWrite(ena_stepper, LOW);// Setea la habilitación del motor , REVISAR SI EL DRIVER LO ACTIVA CON LOW O CON HIGH no todos son iguales, tambien depende de como se conecte.  
 }
 
 void loop() {
